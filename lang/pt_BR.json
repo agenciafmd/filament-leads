@@ -5,5 +5,7 @@
     "Name": "Nome",
     "Email": "E-mail",
     "Phone": "Telefone",
-    "Description": "Descrição"
+    "Description": "Descrição",
+    "Created from": "Criado a partir de",
+    "Created until": "Criado até"
 }
