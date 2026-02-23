@@ -25,12 +25,12 @@ final class LeadService
                 ->get()
                 ->mapWithKeys(fn ($postal) => [
                     $postal->slug => $postal->name,
-                ]);
+                ])
+                ->collect();
         }
 
-        $sources = $sources->merge(collect(config('filament-leads.sources', [])));
-
-        return $sources->sort();
+        return $sources->merge(collect(config('filament-leads.sources', [])))
+            ->sort();
     }
 
     private function queryBuilder(): Builder
