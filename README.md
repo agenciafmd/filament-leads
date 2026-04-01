@@ -52,6 +52,7 @@ Após isso, o menu "Leads" aparecerá no painel, com as páginas de Listar, Cria
 - Factory e Seeder: `LeadFactory` e `LeadSeeder`
 - Resource Filament: `LeadResource` com páginas `ListLeads`, `CreateLead`, `EditLead`
 - Tabela: `LeadsTable` com colunas, filtros (inclusive `Trashed`), ações em lote e ordenação padrão
+- Exportação: `LeadExporter` com suporte a CSV e XLSX, disponível como ação no header da listagem
 - Eventos: Suporte a criação de leads através de listeners.
 - Traduções pt_BR prontas
 

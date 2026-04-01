@@ -6,6 +6,8 @@
     "Email": "E-mail",
     "Phone": "Telefone",
     "Description": "Descrição",
+    "Is active": "Ativo",
+    "Created at": "Criado em",
     "Created from": "Criado a partir de",
     "Created until": "Criado até"
 }
