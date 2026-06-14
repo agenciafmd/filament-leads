@@ -64,7 +64,7 @@ final class LeadForm
                                     Toggle::make('is_active')
                                         ->translateLabel()
                                         ->default(true)
-                                        ->columnSpan(2),
+                                        ->columnSpanFull(),
                                     DateTimeEntry::make('created_at'),
                                     DateTimeEntry::make('updated_at'),
                                 ])
