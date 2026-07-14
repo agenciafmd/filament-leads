@@ -23,8 +23,6 @@ final class LeadResource extends Resource
 {
     protected static ?string $model = Lead::class;
 
-    protected static ?int $navigationSort = 4;
-
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedInbox;
 
     protected static ?string $recordTitleAttribute = 'name';
@@ -37,6 +35,16 @@ final class LeadResource extends Resource
     public static function getPluralModelLabel(): string
     {
         return __('Leads');
+    }
+
+    public static function getNavigationSort(): ?int
+    {
+        return config('filament-leads.navigation_sort');
+    }
+
+    public static function getNavigationGroup(): ?string
+    {
+        return config('filament-leads.navigation_group');
     }
 
     public static function form(Schema $schema): Schema
