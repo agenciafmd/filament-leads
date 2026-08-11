@@ -25,6 +25,7 @@ final class LeadServiceProvider extends ServiceProvider
     private function bootProviders(): void
     {
         $this->app->register(EventServiceProvider::class);
+        $this->app->register(CommandServiceProvider::class);
     }
 
     private function bootMigrations(): void
