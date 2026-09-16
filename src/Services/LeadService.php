@@ -21,7 +21,7 @@ final class LeadService
             $sources = Postal::query()
                 ->select(['name', 'slug'])
                 ->get()
-                ->mapWithKeys(fn ($postal): array => [
+                ->mapWithKeys(fn (Postal $postal): array => [
                     $postal->slug => $postal->name,
                 ])
                 ->collect();

@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Prunable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Auditable;
 use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
+use Override;
 
 #[UseFactory(LeadFactory::class)]
 final class Lead extends Model implements AuditableContract
@@ -29,12 +30,14 @@ final class Lead extends Model implements AuditableContract
         'created_at' => 'desc',
         'name' => 'asc',
     ];
+
     public function prunable(): Builder
     {
         return self::query()
             ->where('deleted_at', '<=', now()->subDays(30));
     }
 
+    #[Override]
     protected function casts(): array
     {
         return [
