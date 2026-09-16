@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Agenciafmd\Leads\Models;
 
+use Agenciafmd\Admix\Traits\WithScopes;
 use Agenciafmd\Leads\Database\Factories\LeadFactory;
 use Illuminate\Database\Eloquent\Attributes\UseFactory;
 use Illuminate\Database\Eloquent\Builder;
@@ -17,8 +18,17 @@ use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
 #[UseFactory(LeadFactory::class)]
 final class Lead extends Model implements AuditableContract
 {
-    use Auditable, HasFactory, Prunable, SoftDeletes;
+    use Auditable;
+    use HasFactory;
+    use Prunable;
+    use SoftDeletes;
+    use WithScopes;
 
+    protected array $defaultSort = [
+        'is_active' => 'desc',
+        'created_at' => 'desc',
+        'name' => 'asc',
+    ];
     public function prunable(): Builder
     {
         return self::query()

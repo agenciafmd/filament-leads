@@ -4,16 +4,14 @@ declare(strict_types=1);
 
 namespace Agenciafmd\Leads\Services;
 
-use Agenciafmd\Leads\Models\Lead;
 use Agenciafmd\Postal\Models\Postal;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 
 final class LeadService
 {
     public static function make(): static
     {
-        return app(self::class);
+        return resolve(self::class);
     }
 
     public static function sources(): Collection
@@ -23,7 +21,7 @@ final class LeadService
             $sources = Postal::query()
                 ->select(['name', 'slug'])
                 ->get()
-                ->mapWithKeys(fn ($postal) => [
+                ->mapWithKeys(fn ($postal): array => [
                     $postal->slug => $postal->name,
                 ])
                 ->collect();
@@ -31,10 +29,5 @@ final class LeadService
 
         return $sources->merge(collect(config('filament-leads.sources', [])))
             ->sort();
-    }
-
-    private function queryBuilder(): Builder
-    {
-        return Lead::query();
     }
 }

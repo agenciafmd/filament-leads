@@ -13,8 +13,8 @@ final class CreateLead
     {
         $fields = collect(config('filament-leads.fields'));
         $remappedData = collect($data->data)
-            ->mapWithKeys(function ($value, $key) use ($fields) {
-                $field = $fields->search(fn ($field) => in_array($key, $field, true));
+            ->mapWithKeys(function ($value, $key) use ($fields): array {
+                $field = $fields->search(fn ($field): bool => in_array($key, $field, true));
 
                 return [($field ?: $key) => $value];
             });
@@ -25,7 +25,7 @@ final class CreateLead
                 'name' => $remappedData->pull('name'),
                 'email' => $remappedData->pull('email'),
                 'phone' => $remappedData->pull('phone'),
-                'description' => $remappedData->map(fn ($value, $key) => str($key)
+                'description' => $remappedData->map(fn ($value, $key): string => str($key)
                     ->slug(separator: ' ')
                     ->ucfirst() . ": {$value}")
                     ->implode("\n"),

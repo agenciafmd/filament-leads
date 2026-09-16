@@ -67,17 +67,15 @@ final class LeadsTable
                         DateTimePicker::make('created_until')
                             ->translateLabel(),
                     ])
-                    ->query(function (Builder $query, array $data): Builder {
-                        return $query
-                            ->when(
-                                $data['created_from'],
-                                fn (Builder $query, $date): Builder => $query->whereDate('created_at', '>=', $date),
-                            )
-                            ->when(
-                                $data['created_until'],
-                                fn (Builder $query, $date): Builder => $query->whereDate('created_at', '<=', $date),
-                            );
-                    }),
+                    ->query(fn (Builder $query, array $data): Builder => $query
+                        ->when(
+                            $data['created_from'],
+                            fn (Builder $query, $date): Builder => $query->whereDate('created_at', '>=', $date),
+                        )
+                        ->when(
+                            $data['created_until'],
+                            fn (Builder $query, $date): Builder => $query->whereDate('created_at', '<=', $date),
+                        )),
                 TrashedFilter::make(),
             ])
             ->recordActions([
@@ -90,10 +88,6 @@ final class LeadsTable
                     RestoreBulkAction::make(),
                 ]),
             ])
-            ->defaultSort(function (Builder $query): Builder {
-                return $query->orderBy('is_active', 'desc')
-                    ->orderBy('created_at', 'desc')
-                    ->orderBy('name');
-            });
+            ->defaultSort(fn (Builder $query): Builder => $query->sort());
     }
 }

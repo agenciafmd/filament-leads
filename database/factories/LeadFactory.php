@@ -7,6 +7,9 @@ namespace Agenciafmd\Leads\Database\Factories;
 use Agenciafmd\Leads\Models\Lead;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+/**
+ * @extends Factory<Lead>
+ */
 final class LeadFactory extends Factory
 {
     protected $model = Lead::class;
