@@ -38,15 +38,12 @@ final class LeadsTable
                 TextColumn::make('source')
                     ->translateLabel()
                     ->sortable()
-                    ->state(function (Lead $lead): string {
-                        $sources = LeadService::make()
-                            ->sources();
-
-                        return $sources[$lead->source] ?? $lead->source;
-                    }),
+                    ->state(static fn (Lead $lead): string => LeadService::make()
+                        ->sources()
+                        ->get((string) $lead->source, (string) $lead->source)),
                 TextColumn::make('created_at')
                     ->translateLabel()
-                    ->dateTime(config('filament-admix.timestamp.format'))
+                    ->dateTime(config()->string('filament-admix.timestamp.format', 'd/m/Y H:i:s'))
                     ->sortable(),
                 ToggleColumn::make('is_active')
                     ->translateLabel()
@@ -69,11 +66,11 @@ final class LeadsTable
                     ])
                     ->query(fn (Builder $query, array $data): Builder => $query
                         ->when(
-                            $data['created_from'],
+                            self::filterValue($data, 'created_from'),
                             fn (Builder $query, string $date): Builder => $query->whereDate('created_at', '>=', $date),
                         )
                         ->when(
-                            $data['created_until'],
+                            self::filterValue($data, 'created_until'),
                             fn (Builder $query, string $date): Builder => $query->whereDate('created_at', '<=', $date),
                         )),
                 TrashedFilter::make(),
@@ -89,5 +86,15 @@ final class LeadsTable
                 ]),
             ])
             ->defaultSort(fn (Builder $query): Builder => $query->sort());
+    }
+
+    /**
+     * @param  array<array-key, mixed>  $data
+     */
+    private static function filterValue(array $data, string $key): ?string
+    {
+        $value = $data[$key] ?? null;
+
+        return is_string($value) && $value !== '' ? $value : null;
     }
 }

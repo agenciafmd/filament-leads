@@ -11,7 +11,9 @@ final class CreateLead
 {
     public function handle(NotificationSent $data): void
     {
-        $fields = collect(config('filament-leads.fields'));
+        $fields = config('filament-leads.fields');
+        $fields = collect(is_array($fields) ? $fields : [])
+            ->filter(static fn (mixed $aliases): bool => is_array($aliases));
         $remappedData = collect($data->data)
             ->mapWithKeys(function (mixed $value, string|int $key) use ($fields): array {
                 $field = $fields->search(fn (array $field): bool => in_array(mb_strtolower((string) $key), $field, true));

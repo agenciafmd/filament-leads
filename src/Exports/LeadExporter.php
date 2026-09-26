@@ -32,7 +32,7 @@ final class LeadExporter extends Exporter
                 ->label(__('Is active'))
                 ->formatStateUsing(fn (string $state): string => match ($state) {
                     '1' => __('Yes'),
-                    '' => __('No'),
+                    default => __('No'),
                 }),
             ExportColumn::make('created_at')
                 ->label(__('Created at')),

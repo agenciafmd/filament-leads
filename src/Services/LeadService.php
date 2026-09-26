@@ -14,20 +14,30 @@ final class LeadService
         return resolve(self::class);
     }
 
+    /**
+     * Origens dos leads: os formulários do postal e as origens extras do config.
+     *
+     * @return Collection<string, string> slug => nome
+     */
     public static function sources(): Collection
     {
-        $sources = collect();
-        if (class_exists(Postal::class)) {
-            $sources = Postal::query()
+        $postalSources = class_exists(Postal::class)
+            ? Postal::query()
                 ->select(['name', 'slug'])
                 ->get()
-                ->mapWithKeys(fn (Postal $postal): array => [
+                ->mapWithKeys(static fn (Postal $postal): array => [
                     $postal->slug => $postal->name,
                 ])
-                ->collect();
-        }
+                ->all()
+            : [];
 
-        return $sources->merge(collect(config('filament-leads.sources', [])))
+        $configSources = config('filament-leads.sources');
+        $configSources = collect(is_array($configSources) ? $configSources : [])
+            ->filter(static fn (mixed $label): bool => is_string($label))
+            ->mapWithKeys(static fn (string $label, int|string $source): array => [(string) $source => $label])
+            ->all();
+
+        return collect([...$postalSources, ...$configSources])
             ->sort();
     }
 }

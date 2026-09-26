@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Agenciafmd\Leads\Database\Seeders;
 
+use Agenciafmd\Leads\Database\Factories\LeadFactory;
 use Agenciafmd\Leads\Models\Lead;
 use Illuminate\Database\Seeder;
 
@@ -14,7 +15,7 @@ final class LeadSeeder extends Seeder
         Lead::query()
             ->truncate();
 
-        Lead::factory()
+        LeadFactory::new()
             ->count(50)
             ->create();
     }

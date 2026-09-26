@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Agenciafmd\Leads\Resources\Leads\Pages;
 
 use Agenciafmd\Admix\Resources\Concerns\RedirectBack;
+use Agenciafmd\Leads\Models\Lead;
 use Agenciafmd\Leads\Resources\Leads\LeadResource;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\ForceDeleteAction;
@@ -17,13 +18,18 @@ final class EditLead extends EditRecord
 
     protected static string $resource = LeadResource::class;
 
+    /**
+     * @var array<int, string>
+     */
     protected $listeners = [
         'auditRestored',
     ];
 
     public function getRelationManagers(): array
     {
-        if ($this->record->trashed()) {
+        $record = $this->getRecord();
+
+        if ($record instanceof Lead && $record->trashed()) {
             return [];
         }
 

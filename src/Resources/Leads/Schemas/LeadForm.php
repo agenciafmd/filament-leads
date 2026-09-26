@@ -34,7 +34,7 @@ final class LeadForm
                                         ->translateLabel()
                                         ->options(LeadService::make()
                                             ->sources()
-                                            ->toArray())
+                                            ->all())
                                         ->required(),
                                     TextInput::make('email')
                                         ->translateLabel()
