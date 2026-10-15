@@ -9,7 +9,7 @@ use Agenciafmd\Postal\Models\Postal;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-uses(TestCase::class, RefreshDatabase::class);
+pest()->extend(TestCase::class)->use(RefreshDatabase::class);
 
 it('lists the postal forms and the configured sources in alphabetical order', function (): void {
     config()->set('filament-leads.sources', [
