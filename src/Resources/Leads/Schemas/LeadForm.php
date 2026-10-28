@@ -26,6 +26,7 @@ final class LeadForm
                     ->schema([
                         Group::make([
                             Section::make(__('General'))
+                                ->key('general')
                                 ->schema([
                                     TextInput::make('name')
                                         ->translateLabel()
@@ -60,6 +61,7 @@ final class LeadForm
                             ->columnSpan(2),
                         Group::make([
                             Section::make(__('Information'))
+                                ->key('information')
                                 ->schema([
                                     Toggle::make('is_active')
                                         ->translateLabel()
