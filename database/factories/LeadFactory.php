@@ -6,12 +6,14 @@ namespace Agenciafmd\Leads\Database\Factories;
 
 use Agenciafmd\Leads\Models\Lead;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Override;
 
 /**
  * @extends Factory<Lead>
  */
 final class LeadFactory extends Factory
 {
+    #[Override]
     protected $model = Lead::class;
 
     public function definition(): array

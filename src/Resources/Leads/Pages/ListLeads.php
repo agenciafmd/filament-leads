@@ -9,9 +9,11 @@ use Agenciafmd\Leads\Resources\Leads\LeadResource;
 use Filament\Actions\CreateAction;
 use Filament\Actions\ExportAction;
 use Filament\Resources\Pages\ListRecords;
+use Override;
 
 final class ListLeads extends ListRecords
 {
+    #[Override]
     protected static string $resource = LeadResource::class;
 
     protected function getHeaderActions(): array
